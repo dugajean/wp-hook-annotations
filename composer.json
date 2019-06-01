@@ -1,0 +1,26 @@
+{
+    "name": "dugajean/wp-hook-annotations",
+    "description": "Use PHP Docblock (annotations) to register WordPress hooks, filters and shortcodes.",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Dugi",
+            "email": "me@dukagj.in"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^7"
+    },
+    "autoload": {
+        "psr-4": {
+            "WpHookAnnotations\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WpHookAnnotations\\Tests\\": "tests/"
+        }
+    }
+}
