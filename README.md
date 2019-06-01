@@ -1,6 +1,6 @@
 # Pouch
 
-[![Latest Stable Version](https://poser.pugx.org/dugajean/wp-hook-annotations/v/stable)](https://packagist.org/packages/dugajean/wp-hook-annotations) 
+[![Latest Unstable Version](https://poser.pugx.org/dugajean/wp-hook-annotations/v/unstable)](https://packagist.org/packages/dugajean/wp-hook-annotations)
 [![Total Downloads](https://poser.pugx.org/dugajean/wp-hook-annotations/downloads)](https://packagist.org/packages/dugajean/wp-hook-annotations) 
 [![License](https://poser.pugx.org/dugajean/wp-hook-annotations/license)](https://packagist.org/packages/dugajean/wp-hook-annotations) 
 
