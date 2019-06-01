@@ -25,7 +25,7 @@ To automatically wire up your class, simply call the `HookRegistrar::bootstrap` 
 ```php
 <?php
 
-namespace My\Namespace;
+namespace My\CoolNamespace;
 
 use WpHookAnnotations\HookRegistrar;
 
@@ -37,7 +37,7 @@ class MyClass
     }
     
     /**
-     * @Action({"tag":"init"})    
+     * @Action(tag="init")    
      */
     public function doSomething()
     {
@@ -52,9 +52,9 @@ The following annotations can be used:
 
 ```php
 /**
- * @Action({"tag":"the hook name", "priority":1, "accepted_args": 1})
- * @Filter({"tag":"the filter name", "priority":1, "accepted_args": 1})
- * @Shortcode({"tag":"the shortcode code"})
+ * @Action(tag="the hook name", priority=1, accepted_args=1)
+ * @Filter(tag="the filter name", priority=1, accepted_args=1)
+ * @Shortcode(tag="the shortcode code")
  */
 ```
 
