@@ -25,7 +25,7 @@ To automatically wire up your class, simply call the `HookRegistrar::bootstrap` 
 ```php
 <?php
 
-namespace My\Namespace
+namespace My\Namespace;
 
 use WpHookAnnotations\HookRegistrar;
 
@@ -65,4 +65,4 @@ $ vendor/bin/phpunit
 ```
 
 ## License
-Pouch is released under [the MIT License](LICENSE).
+WP Hook Annotations is released under [the MIT License](LICENSE).
