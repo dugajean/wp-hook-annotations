@@ -29,6 +29,9 @@ namespace My\CoolNamespace;
 
 use WpHookAnnotations\HookRegistrar;
 
+// Add this somewhere and only run it once
+HookRegistrar::setup();
+
 class MyClass
 {
     public function __construct(HookRegistrar $hookRegistrar) 
