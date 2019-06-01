@@ -46,11 +46,7 @@ function superFunction()
 
 class MyTest
 {
-    /**
-     * @Action({"tag":"init", "priority":10, "accepted_args":1})
-     * @Action({"tag":"something_else", "priority":100, "accepted_args":1})
-     * @Filter({"tag":"best_filta", "priority":100, "accepted_args":1})
-     */
+    /* @Filter({"tag":"best_filta", "priority":100, "accepted_args":1}) */
     public function superMethod()
     {
         return 'Hello World';
@@ -59,5 +55,6 @@ class MyTest
 
 $test = new MyTest;
 
-(new HookRegistrar)->setup([$test, 'superMethod']);
-(new HookRegistrar)->setup('superFunction');
+//
+(new HookRegistrar)->register([$test, 'superMethod']);
+//(new HookRegistrar)->register('superFunction');

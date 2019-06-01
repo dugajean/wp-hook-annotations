@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace WpHookAnnotations\Models;
 
+use function WpHookAnnotations\Helpers\normalize_function;
 use WpHookAnnotations\Exceptions\TriggerNotFoundException;
 use WpHookAnnotations\Exceptions\ArgumentNotFoundException;
-use function WpHookAnnotations\Helpers\normalize_function;
 
 abstract class Model
 {

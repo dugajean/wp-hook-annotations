@@ -36,7 +36,7 @@ class Filter extends Model
         parent::__construct($data, $callable);
 
         $this->tag = get($data, 'tag');
-        $this->priority = get($data, 'priority', 100);
+        $this->priority = get($data, 'priority', 10);
         $this->acceptedArgs = get($data, 'accepted_args', 1);
     }
 

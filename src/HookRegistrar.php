@@ -4,13 +4,34 @@ declare(strict_types=1);
 
 namespace WpHookAnnotations;
 
+use WpHookAnnotations\Models\Model;
 use WpHookAnnotations\Parsers\DocBlockParser;
 use WpHookAnnotations\Parsers\AnnotationParser;
 use WpHookAnnotations\Exceptions\SyntaxException;
 use WpHookAnnotations\Exceptions\InvalidCallableException;
 
-class HookRegistrar
+final class HookRegistrar
 {
+    /**
+     * Initialize a class to "listen" for annotations.
+     *
+     * @param object|string $object
+     *
+     * @throws SyntaxException
+     * @throws InvalidCallableException
+     */
+    public function bootstrap($object)
+    {
+        if ((is_string($object) && class_exists($object)) || is_object($object)) {
+            $methods = get_class_methods($object);
+            foreach ((array)$methods as $method) {
+                if ($this->hasAnnotations($object, $method)) {
+                    $this->register([$object, $method]);
+                }
+            }
+        }
+    }
+
     /**
      * Parse the annotations and trigger the functions of the respective models.
      *
@@ -19,19 +40,33 @@ class HookRegistrar
      * @throws SyntaxException
      * @throws InvalidCallableException
      */
-    public function setup($callable)
+    public function register($callable)
     {
         $annotationParser = new AnnotationParser(new DocBlockParser($callable));
         $modelsNested = $annotationParser->parse()->get();
 
-        $models = [];
         array_walk_recursive(
             $modelsNested,
-            function($v) use (&$models) { $models[] = $v; }
+            function(Model $model) { $model->trigger(); }
         );
+    }
 
-        foreach ($models as $model) {
-            $model->trigger();
+    /**
+     * Determine whether the method has annotations.
+     *
+     * @param mixed  $class
+     * @param string $method
+     *
+     * @return bool
+     */
+    private function hasAnnotations($class, $method): bool
+    {
+        try {
+            $reflectionMethod = new \ReflectionMethod($class, $method);
+        } catch (\ReflectionException $e) {
+            return false;
         }
+
+        return $reflectionMethod->getDocComment() !== false;
     }
 }

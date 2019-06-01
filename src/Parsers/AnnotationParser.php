@@ -43,8 +43,8 @@ class AnnotationParser extends Parser
     public function parse(): self
     {
         $docBlockLines = $this->docBlockParser->parse()->get();
-
-        foreach ($docBlockLines as $line) {
+        
+        foreach ((array)$docBlockLines as $line) {
             if ($this->ignoreFirstAndLast($line)) continue;
 
             foreach ($this->mapModels() as $key => $model) {
@@ -58,12 +58,12 @@ class AnnotationParser extends Parser
                 // Fetch the JSON between the brackets.
                 preg_match('#\((.*?)\)#', $line, $match);
 
-                if (!($args = $match[1])) {
-                    throw new SyntaxException('Invalid syntax detected: Cannot find proper brackets.');
+                if (!isset($match[1])) {
+                    throw new SyntaxException('Invalid syntax detected: Cannot find proper opening or closing brackets.');
                 }
 
                 // Parse the JSON
-                $args = @json_decode($args, true);
+                $args = @json_decode($match[1], true);
 
                 if ($args === null && json_last_error() !== JSON_ERROR_NONE) {
                     throw new SyntaxException('Invalid syntax detected: Annotation arguments must be in JSON format.');
