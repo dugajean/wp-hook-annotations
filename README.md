@@ -1,4 +1,4 @@
-# Pouch
+# WP Hook Annotations
 
 [![Latest Unstable Version](https://poser.pugx.org/dugajean/wp-hook-annotations/v/unstable)](https://packagist.org/packages/dugajean/wp-hook-annotations)
 [![Total Downloads](https://poser.pugx.org/dugajean/wp-hook-annotations/downloads)](https://packagist.org/packages/dugajean/wp-hook-annotations) 
