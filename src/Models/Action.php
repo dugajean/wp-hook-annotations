@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace WpHookAnnotations\Models;
 
+/**
+ * @Annotation
+ */
 class Action extends Filter
 {
     /**

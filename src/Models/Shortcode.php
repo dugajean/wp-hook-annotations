@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace WpHookAnnotations\Models;
 
+/**
+ * @Annotation
+ */
 class Shortcode extends Model
 {
     /**
@@ -14,14 +17,13 @@ class Shortcode extends Model
     /**
      * Shortcode constructor.
      *
-     * @param array        $data
-     * @param array|string $callable
+     * @param array $data
      *
      * @throws \WpHookAnnotations\Exceptions\ArgumentNotFoundException
      */
-    public function __construct(array $data, $callable)
+    public function __construct(array $data)
     {
-        parent::__construct($data, $callable);
+        parent::__construct($data);
 
         $this->tag = $data['tag'];
     }

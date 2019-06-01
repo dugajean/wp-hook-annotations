@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace WpHookAnnotations\Models;
 
 use function WpHookAnnotations\Helpers\get;
+use WpHookAnnotations\Exceptions\ArgumentNotFoundException;
 
+/**
+ * @Annotation
+ */
 class Filter extends Model
 {
     /**
@@ -26,14 +30,13 @@ class Filter extends Model
     /**
      * Filter constructor.
      *
-     * @param array        $data
-     * @param array|string $callable
+     * @param array $data
      *
-     * @throws \WpHookAnnotations\Exceptions\ArgumentNotFoundException
+     * @throws ArgumentNotFoundException
      */
-    public function __construct(array $data, $callable)
+    public function __construct(array $data)
     {
-        parent::__construct($data, $callable);
+        parent::__construct($data);
 
         $this->tag = get($data, 'tag');
         $this->priority = get($data, 'priority', 10);

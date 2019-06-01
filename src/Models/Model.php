@@ -34,15 +34,12 @@ abstract class Model
      * Model constructor.
      *
      * @param array        $data
-     * @param array|string $callable
      *
      * @throws \WpHookAnnotations\Exceptions\ArgumentNotFoundException
      */
-    public function __construct(array $data, $callable)
+    public function __construct(array $data)
     {
         $this->validateFields($data);
-
-        $this->callable = $callable;
     }
 
     /**
@@ -60,6 +57,20 @@ abstract class Model
     }
 
     /**
+     * Set the callable (mutable).
+     *
+     * @param $callable
+     *
+     * @return $this
+     */
+    public function setCallable($callable): self
+    {
+        $this->callable = $callable;
+
+        return $this;
+    }
+
+    /**
      * Determine if the required arguments set in requiredArguments are present.
      *
      * @param array $data
@@ -71,9 +82,8 @@ abstract class Model
         foreach ($this->requiredArguments as $argument) {
             if (!in_array($argument, array_keys($data))) {
                 throw new ArgumentNotFoundException(sprintf(
-                    'Required argument "%s" not found in annotation for function: %s',
+                    'Required argument "%s" not found in annotation.',
                     $argument,
-                    normalize_function($this->callable)
                 ));
             }
         }

@@ -5,20 +5,29 @@ declare(strict_types=1);
 namespace WpHookAnnotations;
 
 use WpHookAnnotations\Models\Model;
-use WpHookAnnotations\Parsers\DocBlockParser;
 use WpHookAnnotations\Parsers\AnnotationParser;
-use WpHookAnnotations\Exceptions\SyntaxException;
-use WpHookAnnotations\Exceptions\InvalidCallableException;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 
 final class HookRegistrar
 {
+    /**
+     * Call this method once somewhere early in your code.
+     *
+     * This method will be redundant soon:
+     * @url https://github.com/doctrine/annotations/issues/182
+     */
+    public static function setup()
+    {
+        AnnotationRegistry::registerLoader('class_exists');
+    }
+
     /**
      * Initialize a class to "listen" for annotations.
      *
      * @param object|string $object
      *
-     * @throws SyntaxException
-     * @throws InvalidCallableException
+     * @throws \Doctrine\Common\Annotations\AnnotationException
+     * @throws \WpHookAnnotations\Exceptions\InvalidCallableException
      */
     public function bootstrap($object)
     {
@@ -37,16 +46,16 @@ final class HookRegistrar
      *
      * @param $callable
      *
-     * @throws SyntaxException
-     * @throws InvalidCallableException
+     * @throws \Doctrine\Common\Annotations\AnnotationException
+     * @throws \WpHookAnnotations\Exceptions\InvalidCallableException
      */
     public function register($callable)
     {
-        $annotationParser = new AnnotationParser(new DocBlockParser($callable));
-        $modelsNested = $annotationParser->parse()->get();
-
-        array_walk_recursive(
-            $modelsNested,
+        $annotationParser = new AnnotationParser($callable);
+        $modelsCollection = $annotationParser->getModels();
+        
+        array_walk(
+            $modelsCollection,
             function(Model $model) { $model->trigger(); }
         );
     }

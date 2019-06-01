@@ -4,89 +4,65 @@ declare(strict_types=1);
 
 namespace WpHookAnnotations\Parsers;
 
-use WpHookAnnotations\Exceptions\SyntaxException;
-use function WpHookAnnotations\Helpers\class_basename;
+use ReflectionMethod;
+use ReflectionFunction;
+use ReflectionException;
+use WpHookAnnotations\Models\Model;
+use Doctrine\Common\Annotations\AnnotationReader;
+use WpHookAnnotations\Exceptions\InvalidCallableException;
 
-class AnnotationParser extends Parser
+class AnnotationParser
 {
     /**
-     * @var Parser
+     * @var \ReflectionFunctionAbstract
      */
-    private $docBlockParser;
+    protected $reflectionFunction;
 
     /**
-     * @var array
+     * @var array|string
      */
-    protected $output = [
-        'actions' => [],
-        'filters' => [],
-        'shortcodes' => []
-    ];
+    private $callable;
 
     /**
-     * AnnotationParser constructor.
+     * DocBlockParser constructor.
      *
-     * @param Parser $docBlockParser
+     * @param array|string $callable
+     *
+     * @throws InvalidCallableException
      */
-    public function __construct(Parser $docBlockParser)
+    public function __construct($callable)
     {
-        $this->docBlockParser = $docBlockParser;
-    }
+        $this->callable = $callable;
 
-    /**
-     * Parse actions, filters and shortcodes from docblocks.
-     *
-     * @return $this
-     *
-     * @throws SyntaxException
-     */
-    public function parse(): self
-    {
-        $docBlockLines = $this->docBlockParser->parse()->get();
-        
-        foreach ((array)$docBlockLines as $line) {
-            if ($this->ignoreFirstAndLast($line)) continue;
+        if (is_array($callable) && count($callable) === 2) {
+            [$class, $method] = $callable;
 
-            foreach ($this->mapModels() as $key => $model) {
-                $modelBase = class_basename($model);
-
-                // Check if we have an annotation that interests us
-                if (strpos($line, "@{$modelBase}(") === false) {
-                    continue;
-                }
-
-                // Fetch the JSON between the brackets.
-                preg_match('#\((.*?)\)#', $line, $match);
-
-                if (!isset($match[1])) {
-                    throw new SyntaxException('Invalid syntax detected: Cannot find proper opening or closing brackets.');
-                }
-
-                // Parse the JSON
-                $args = @json_decode($match[1], true);
-
-                if ($args === null && json_last_error() !== JSON_ERROR_NONE) {
-                    throw new SyntaxException('Invalid syntax detected: Annotation arguments must be in JSON format.');
-                }
-
-                $this->output[$key][] = new $model($args, $this->docBlockParser->getCallable());
+            try {
+                $this->reflectionFunction = new ReflectionMethod($class, $method);
+            } catch (ReflectionException $e) {
+                throw new InvalidCallableException;
             }
+        } else {
+            throw new InvalidCallableException;
         }
-
-        return $this;
     }
 
     /**
-     * Determine whether we are on the first or last line of the docblock.
+     * Parse the docblock and return an array for each line.
      *
-     * @param string $line
+     * @return array
      *
-     * @return bool
+     * @throws \Doctrine\Common\Annotations\AnnotationException
      */
-    public function ignoreFirstAndLast(string $line): bool
+    public function getModels(): array
     {
-        $line = trim($line);
+        $reader = new AnnotationReader();
+        $annotations = $reader->getMethodAnnotations($this->reflectionFunction);
 
-        return $line === '/**' || $line === '*/';
+        $annotations = array_map(function (Model $item) {
+            return $item->setCallable($this->callable);
+        }, $annotations);
+
+        return $annotations;
     }
 }
