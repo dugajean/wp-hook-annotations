@@ -28,6 +28,7 @@ To automatically wire up your class, simply call the `HookRegistrar::bootstrap` 
 namespace My\CoolNamespace;
 
 use WpHookAnnotations\HookRegistrar;
+use WpHookAnnotations\Models\Action;
 
 // Add this somewhere and only run it once
 HookRegistrar::setup();
