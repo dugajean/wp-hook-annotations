@@ -7,6 +7,13 @@ use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 
 abstract class TestCase extends PhpUnitTestCase
 {
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        HookRegistrar::setup();
+    }
+
     /**
      * @var HookRegistrar
      */
