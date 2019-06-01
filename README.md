@@ -65,7 +65,7 @@ The following annotations can be used:
 ## Testing
 
 ```bash
-$ vendor/bin/phpunit
+$ composer test
 ```
 
 ## License
