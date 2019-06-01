@@ -4,7 +4,7 @@
 [![Total Downloads](https://poser.pugx.org/dugajean/wp-hook-annotations/downloads)](https://packagist.org/packages/dugajean/wp-hook-annotations) 
 [![License](https://poser.pugx.org/dugajean/wp-hook-annotations/license)](https://packagist.org/packages/dugajean/wp-hook-annotations) 
 
-Tiny IoC container with awesome autowiring & more - for your PHP project.
+Use PHP Docblock (annotations) to register WordPress hooks, filters and shortcodes.
 
 ## Requirements
 
