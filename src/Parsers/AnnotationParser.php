@@ -9,38 +9,60 @@ use function WpHookAnnotations\Helpers\class_basename;
 
 class AnnotationParser extends Parser
 {
+    /**
+     * @var Parser
+     */
     private $docBlockParser;
+
+    /**
+     * @var array
+     */
     protected $output = [
         'actions' => [],
         'filters' => [],
         'shortcodes' => []
     ];
 
+    /**
+     * AnnotationParser constructor.
+     *
+     * @param Parser $docBlockParser
+     */
     public function __construct(Parser $docBlockParser)
     {
         $this->docBlockParser = $docBlockParser;
     }
 
-    public function parse()
+    /**
+     * Parse actions, filters and shortcodes from docblocks.
+     *
+     * @return $this
+     *
+     * @throws SyntaxException
+     */
+    public function parse(): self
     {
-        $docBlock = $this->docBlockParser->parse()->get();
+        $docBlockLines = $this->docBlockParser->parse()->get();
 
-        foreach (explode("\n", $docBlock) as $line) {
+        foreach ($docBlockLines as $line) {
             if ($this->ignoreFirstAndLast($line)) continue;
 
             foreach ($this->mapModels() as $key => $model) {
                 $modelBase = class_basename($model);
 
+                // Check if we have an annotation that interests us
                 if (strpos($line, "@{$modelBase}(") === false) {
                     continue;
                 }
 
+                // Fetch the JSON between the brackets.
                 preg_match('#\((.*?)\)#', $line, $match);
 
                 if (!($args = $match[1])) {
-                    throw new SyntaxException('Invalid syntax detected: Cannot find proper parentheses.');
+                    throw new SyntaxException('Invalid syntax detected: Cannot find proper brackets.');
                 }
 
+                // Parse the JSON
                 $args = @json_decode($args, true);
 
                 if ($args === null && json_last_error() !== JSON_ERROR_NONE) {
@@ -54,12 +76,14 @@ class AnnotationParser extends Parser
         return $this;
     }
 
-    public function get()
-    {
-        return $this->output;
-    }
-
-    public function ignoreFirstAndLast(string $line)
+    /**
+     * Determine whether we are on the first or last line of the docblock.
+     *
+     * @param string $line
+     *
+     * @return bool
+     */
+    public function ignoreFirstAndLast(string $line): bool
     {
         $line = trim($line);
 

@@ -28,9 +28,26 @@ function get(array $array, string $key, $default = null)
  * @param  string|object $class
  * @return string
  */
-function class_basename($class)
+function class_basename(string $class): string
 {
     $class = is_object($class) ? get_class($class) : $class;
 
     return basename(str_replace('\\', '/', $class));
+}
+
+/**
+ * Prepares a function name for display.
+ *
+ * @param array|string $function
+ *
+ * @return string
+ */
+function normalize_function($function): string
+{
+    if (is_array($function) && count($function) === 2) {
+        [$class, $method] = $function;
+        return "{$class}::$method";
+    }
+
+    return (string)$function;
 }

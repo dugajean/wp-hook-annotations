@@ -6,8 +6,19 @@ namespace WpHookAnnotations\Models;
 
 class Shortcode extends Model
 {
+    /**
+     * @var string
+     */
     protected $handler = 'add_shortcode';
 
+    /**
+     * Shortcode constructor.
+     *
+     * @param array        $data
+     * @param array|string $callable
+     *
+     * @throws \WpHookAnnotations\Exceptions\ArgumentNotFoundException
+     */
     public function __construct(array $data, $callable)
     {
         parent::__construct($data, $callable);
@@ -15,8 +26,13 @@ class Shortcode extends Model
         $this->tag = $data['tag'];
     }
 
-    public function trigger()
+    /**
+     * Ordered indexed list of arguments expected by the trigger functions.
+     *
+     * @return array
+     */
+    protected function arguments(): array
     {
-        add_shortcode($this->tag, $this->callable);
+        return [$this->tag, $this->callable];
     }
 }

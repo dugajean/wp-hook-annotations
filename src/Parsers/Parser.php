@@ -10,17 +10,32 @@ use WpHookAnnotations\Models\Shortcode;
 
 abstract class Parser
 {
+    /**
+     * @var mixed
+     */
     protected $output;
+
+    /**
+     * @var array|string
+     */
     protected $callable;
 
-    abstract public function parse();
-
+    /**
+     * Fetch the output of the parsing process.
+     *
+     * @return mixed
+     */
     public function get()
     {
         return $this->output;
     }
 
-    protected function mapModels()
+    /**
+     * List of models we are working with and their respective class paths.
+     *
+     * @return array
+     */
+    protected function mapModels(): array
     {
         return [
             'actions' => Action::class,
@@ -29,8 +44,20 @@ abstract class Parser
         ];
     }
 
+    /**
+     * Getter for the callable property.
+     *
+     * @return array|string
+     */
     protected function getCallable()
     {
         return $this->callable;
     }
+
+    /**
+     * The parsing algorithm.
+     *
+     * @return $this
+     */
+    abstract public function parse();
 }

@@ -11,9 +11,18 @@ use WpHookAnnotations\Exceptions\InvalidCallableException;
 
 class DocBlockParser extends Parser
 {
-    protected $output;
+    /**
+     * @var \ReflectionFunctionAbstract
+     */
     protected $reflectionFunction;
 
+    /**
+     * DocBlockParser constructor.
+     *
+     * @param array|string $callable
+     *
+     * @throws InvalidCallableException
+     */
     public function __construct($callable)
     {
         $this->callable = $callable;
@@ -37,14 +46,21 @@ class DocBlockParser extends Parser
         }
     }
 
-    public function parse()
+    /**
+     * Parse the docblock and return an array for each line.
+     *
+     * @return $this
+     */
+    public function parse(): self
     {
         if (!($docblock = $this->reflectionFunction->getDocComment())) {
             return $this;
         }
 
-        $this->output = str_replace('    ', '', $docblock);
-        $this->output = str_replace("\t", '', $docblock);
+        $docblock = str_replace('    ', '', $docblock);
+        $docblock = str_replace("\t", '', $docblock);
+
+        $this->output = explode("\n", $docblock);
 
         return $this;
     }

@@ -6,8 +6,8 @@ namespace WpHookAnnotations\Models;
 
 class Action extends Filter
 {
-    public function trigger()
-    {
-        add_action($this->tag, $this->callable, $this->priority, $this->acceptedArgs);
-    }
+    /**
+     * @var string
+     */
+    protected $handler = 'add_action';
 }
