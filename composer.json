@@ -6,7 +6,7 @@
     "minimum-stability": "stable",
     "authors": [
         {
-            "name": "Dugi",
+            "name": "Dukagjin Surdulli",
             "email": "me@dukagj.in"
         }
     ],
@@ -16,7 +16,10 @@
     "autoload": {
         "psr-4": {
             "WpHookAnnotations\\": "src/"
-        }
+        },
+        "files": [
+            "src/Helpers/Utils.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
