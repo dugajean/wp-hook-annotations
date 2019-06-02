@@ -2,20 +2,13 @@
 
 namespace WpHookAnnotations\Tests;
 
-use WpHookAnnotations\HookRegistrar;
+use WpHookAnnotations\HookRegistry;
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 
 abstract class TestCase extends PhpUnitTestCase
 {
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-
-        HookRegistrar::setup();
-    }
-
     /**
-     * @var HookRegistrar
+     * @var HookRegistry
      */
     protected $hookRegistrar;
 
@@ -23,7 +16,7 @@ abstract class TestCase extends PhpUnitTestCase
     {
         parent::setUp();
 
-        $this->hookRegistrar = new HookRegistrar;
+        $this->hookRegistrar = new HookRegistry;
     }
 
     protected function registerHook($class, $method, $buffer = true): ?string

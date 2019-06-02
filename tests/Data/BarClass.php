@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace WpHookAnnotations\Tests\Data;
 
-use WpHookAnnotations\HookRegistrar;
+use WpHookAnnotations\HookRegistry;
 use WpHookAnnotations\Models\Action;
 use WpHookAnnotations\Models\Filter;
 use WpHookAnnotations\Models\Shortcode;
 
 class BarClass
 {
-    public function __construct(HookRegistrar $hookRegistrar) {
+    public function __construct(HookRegistry $hookRegistrar) {
         $hookRegistrar->bootstrap($this);
     }
 

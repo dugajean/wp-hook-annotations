@@ -50,7 +50,7 @@ abstract class Model
     public function trigger()
     {
         if (!$this->handler && !function_exists($this->handler)) {
-            throw new TriggerNotFoundException;
+            throw new TriggerNotFoundException("Function '{$this->handler}' could not be executed");
         }
     
         ($this->handler)(...$this->arguments());
@@ -83,7 +83,7 @@ abstract class Model
             if (!in_array($argument, array_keys($data))) {
                 throw new ArgumentNotFoundException(sprintf(
                     'Required argument "%s" not found in annotation.',
-                    $argument,
+                    $argument
                 ));
             }
         }

@@ -23,7 +23,8 @@
             "WpHookAnnotations\\": "src/"
         },
         "files": [
-            "src/Helpers/Utils.php"
+            "src/Helpers/Utils.php",
+            "src/Helpers/RegisterAnnotations.php"
         ]
     },
     "autoload-dev": {
