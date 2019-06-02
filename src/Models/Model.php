@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace WpHookAnnotations\Models;
 
-use function WpHookAnnotations\Helpers\normalize_function;
 use WpHookAnnotations\Exceptions\TriggerNotFoundException;
 use WpHookAnnotations\Exceptions\ArgumentNotFoundException;
 
@@ -21,7 +20,7 @@ abstract class Model
     protected $handler;
 
     /**
-     * @var array|string
+     * @var array
      */
     protected $callable;
 
