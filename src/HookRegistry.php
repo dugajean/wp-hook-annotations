@@ -39,13 +39,13 @@ final class HookRegistry
     /**
      * Parse the annotations and trigger the functions of the respective models.
      *
-     * @param $callable
+     * @param array $callable
      *
      * @throws \Doctrine\Common\Annotations\AnnotationException
      * @throws \WpHookAnnotations\Exceptions\InvalidCallableException
      * @throws \WpHookAnnotations\Exceptions\TriggerNotFoundException
      */
-    public function register($callable)
+    public function register(array $callable)
     {
         $annotationParser = new AnnotationParser($callable);
         $modelsCollection = $annotationParser->getModels();
