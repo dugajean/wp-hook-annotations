@@ -17,10 +17,6 @@ final class HookRegistry
      * Initialize a class to "listen" for annotations.
      *
      * @param object|string $object
-     *
-     * @throws \Doctrine\Common\Annotations\AnnotationException
-     * @throws \WpHookAnnotations\Exceptions\InvalidCallableException
-     * @throws \WpHookAnnotations\Exceptions\TriggerNotFoundException
      */
     public function bootstrap($object)
     {
@@ -31,7 +27,15 @@ final class HookRegistry
         $methods = (array)get_class_methods($object);
 
         foreach ($this->annotatedMethods($object, $methods) as $method) {
-            $this->register([$object, $method]);
+            try {
+                $this->register([$object, $method]);
+            } catch (\Exception $e) {
+                if (function_exists('wp_die')) {
+                    wp_die('Could not register hooks with annotations. Please submit an issue.');
+                } else {
+                    return;
+                }
+            }
         }
     }
 
