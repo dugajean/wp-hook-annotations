@@ -42,16 +42,16 @@ final class HookRegistry
      *
      * @throws \Doctrine\Common\Annotations\AnnotationException
      * @throws \WpHookAnnotations\Exceptions\InvalidCallableException
+     * @throws \WpHookAnnotations\Exceptions\TriggerNotFoundException
      */
     public function register($callable)
     {
         $annotationParser = new AnnotationParser($callable);
         $modelsCollection = $annotationParser->getModels();
-        
-        array_walk(
-            $modelsCollection,
-            function(Model $model) { $model->trigger(); }
-        );
+
+        foreach ($modelsCollection as $model) {
+            $model->trigger();
+        }
     }
 
     /**

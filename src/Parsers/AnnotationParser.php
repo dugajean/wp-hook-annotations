@@ -43,7 +43,7 @@ class AnnotationParser
     /**
      * Parse the docblock and return an array for each line.
      *
-     * @return array
+     * @return Model[]
      *
      * @throws \Doctrine\Common\Annotations\AnnotationException
      */
