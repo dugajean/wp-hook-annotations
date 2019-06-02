@@ -21,6 +21,7 @@ final class HookRegistry
      *
      * @throws \Doctrine\Common\Annotations\AnnotationException
      * @throws \WpHookAnnotations\Exceptions\InvalidCallableException
+     * @throws \WpHookAnnotations\Exceptions\TriggerNotFoundException
      */
     public function bootstrap($object)
     {
