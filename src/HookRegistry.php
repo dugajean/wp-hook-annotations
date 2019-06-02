@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace WpHookAnnotations;
 
-use WpHookAnnotations\Models\Model;
 use WpHookAnnotations\Parsers\AnnotationParser;
 
 /**
