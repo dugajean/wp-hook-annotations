@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WpHookAnnotations\Helpers;
+namespace Dugajean\WpHookAnnotations\Helpers;
 
 /**
  * Safely retrieve key from array.

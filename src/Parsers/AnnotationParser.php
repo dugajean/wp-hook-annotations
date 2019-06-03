@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace WpHookAnnotations\Parsers;
+namespace Dugajean\WpHookAnnotations\Parsers;
 
 use ReflectionMethod;
 use ReflectionException;
-use WpHookAnnotations\Models\Model;
+use Dugajean\WpHookAnnotations\Models\Model;
 use Doctrine\Common\Annotations\AnnotationReader;
-use WpHookAnnotations\Exceptions\InvalidCallableException;
+use Dugajean\WpHookAnnotations\Exceptions\InvalidCallableException;
 
 /**
  * Parses the annotations from the docblocks with Doctrine Annotations.

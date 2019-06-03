@@ -20,15 +20,15 @@ $ composer require dugajean/wp-hook-annotations
 
 ## Usage
 
-To automatically wire up your class, simply call the `HookRegistrar::bootstrap` method, like so: 
+To automatically wire up your class, simply call the `HookRegistry::bootstrap` method, like so: 
 
 ```php
 <?php
 
 namespace My\CoolNamespace;
 
-use WpHookAnnotations\HookRegistry;
-use WpHookAnnotations\Models\Action;
+use Dugajean\WpHookAnnotations\HookRegistry;
+use Dugajean\WpHookAnnotations\Models\Action;
 
 class MyClass
 {

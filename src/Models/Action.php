@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WpHookAnnotations\Models;
+namespace Dugajean\WpHookAnnotations\Models;
 
 /**
  * @Annotation

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace WpHookAnnotations\Models;
+namespace Dugajean\WpHookAnnotations\Models;
 
-use WpHookAnnotations\Exceptions\TriggerNotFoundException;
-use WpHookAnnotations\Exceptions\ArgumentNotFoundException;
+use Dugajean\WpHookAnnotations\Exceptions\TriggerNotFoundException;
+use Dugajean\WpHookAnnotations\Exceptions\ArgumentNotFoundException;
 
 abstract class Model
 {
@@ -34,7 +34,7 @@ abstract class Model
      *
      * @param array        $data
      *
-     * @throws \WpHookAnnotations\Exceptions\ArgumentNotFoundException
+     * @throws \Dugajean\WpHookAnnotations\Exceptions\ArgumentNotFoundException
      */
     public function __construct(array $data)
     {

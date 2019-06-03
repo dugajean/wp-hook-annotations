@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace WpHookAnnotations;
+namespace Dugajean\WpHookAnnotations;
 
-use WpHookAnnotations\Parsers\AnnotationParser;
+use Dugajean\WpHookAnnotations\Parsers\AnnotationParser;
 
 /**
  * Reads the annotations and registers the hooks.
@@ -13,6 +13,22 @@ use WpHookAnnotations\Parsers\AnnotationParser;
  */
 final class HookRegistry
 {
+    /**
+     * Bootstrap a list of classes.
+     *
+     * @param array             $classes
+     * @param HookRegistry|null $registry
+     */
+    public static function bootstrapClasses(array $classes, ?HookRegistry $registry = null)
+    {
+        $classes = array_filter($classes, 'class_exists');
+        $registry = $registry ?: new self;
+
+        foreach ($classes as $class) {
+            $registry->bootstrap($class);
+        }
+    }
+
     /**
      * Initialize a class to "listen" for annotations.
      *
@@ -45,8 +61,8 @@ final class HookRegistry
      * @param array $callable
      *
      * @throws \Doctrine\Common\Annotations\AnnotationException
-     * @throws \WpHookAnnotations\Exceptions\InvalidCallableException
-     * @throws \WpHookAnnotations\Exceptions\TriggerNotFoundException
+     * @throws \Dugajean\WpHookAnnotations\Exceptions\InvalidCallableException
+     * @throws \Dugajean\WpHookAnnotations\Exceptions\TriggerNotFoundException
      */
     public function register(array $callable)
     {

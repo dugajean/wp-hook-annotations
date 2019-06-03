@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace WpHookAnnotations\Models;
+namespace Dugajean\WpHookAnnotations\Models;
 
-use function WpHookAnnotations\Helpers\get;
-use WpHookAnnotations\Exceptions\ArgumentNotFoundException;
+use function Dugajean\WpHookAnnotations\Helpers\get;
+use Dugajean\WpHookAnnotations\Exceptions\ArgumentNotFoundException;
 
 /**
  * @Annotation
