@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "WpHookAnnotations\\": "src/"
+            "Dugajean\\WpHookAnnotations\\": "src/"
         },
         "files": [
             "src/Helpers/Utils.php",

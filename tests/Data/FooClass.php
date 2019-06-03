@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace WpHookAnnotations\Tests\Data;
+namespace Dugajean\WpHookAnnotations\Tests\Data;
 
-use WpHookAnnotations\Models\Action;
-use WpHookAnnotations\Models\Filter;
-use WpHookAnnotations\Models\Shortcode;
+use Dugajean\WpHookAnnotations\Models\Action;
+use Dugajean\WpHookAnnotations\Models\Filter;
+use Dugajean\WpHookAnnotations\Models\Shortcode;
 
 class FooClass
 {

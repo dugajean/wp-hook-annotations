@@ -1,8 +1,8 @@
 <?php
 
-namespace WpHookAnnotations\Tests;
+namespace Dugajean\WpHookAnnotations\Tests;
 
-use WpHookAnnotations\HookRegistry;
+use Dugajean\WpHookAnnotations\HookRegistry;
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 
 abstract class TestCase extends PhpUnitTestCase
