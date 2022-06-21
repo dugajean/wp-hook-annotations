@@ -1,4 +1,4 @@
-# WP Hook Annotations
+# WP Hook
 
 [![PHPUnit](https://github.com/arnaud-ritti/wp-hook/actions/workflows/php.yml/badge.svg)](https://github.com/arnaud-ritti/wp-hook/actions/workflows/php.yml)
 [![Latest Unstable Version](https://poser.pugx.org/dugajean/wp-hook-annotations/v/unstable)](https://packagist.org/packages/arnaud-ritti/wp-hook)
