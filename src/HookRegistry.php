@@ -93,7 +93,11 @@ final class HookRegistry
                 continue;
             }
 
-            if (!empty($reflectionMethod->getAttributes()) || $reflectionMethod->getDocComment() !== false) {
+            if (PHP_VERSION_ID >= 80000){
+                if (!empty($reflectionMethod->getAttributes())) {
+                    yield $key => $method;
+                }
+            }else if ($reflectionMethod->getDocComment() !== false) {
                 yield $key => $method;
             }
         }
