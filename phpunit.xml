@@ -9,7 +9,7 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="WP Hook Annotations Tester">
+        <testsuite name="WP Hook Tester">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>

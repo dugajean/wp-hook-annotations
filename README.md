@@ -15,7 +15,7 @@ Use PHP Docblock (annotations) to register WordPress hooks, filters and shortcod
 Via Composer
 
 ```bash
-$ composer require dugajean/wp-hook-annotations
+$ composer require arnaud-ritti/wp-hook
 ```
 
 ## Usage
@@ -27,8 +27,8 @@ To automatically wire up your class, simply call the `HookRegistry::bootstrap` m
 
 namespace My\CoolNamespace;
 
-use Dugajean\WpHookAnnotations\HookRegistry;
-use Dugajean\WpHookAnnotations\Models\Action;
+use Ari\WpHook\HookRegistry;
+use Ari\WpHook\Models\Action;
 
 class MyClass
 {
@@ -66,4 +66,4 @@ $ composer test
 ```
 
 ## License
-WP Hook Annotations is released under [the MIT License](LICENSE).
+WP Hook is released under [the MIT License](LICENSE).
