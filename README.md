@@ -75,7 +75,7 @@ For PHP 8, please use attributes:
 ## Testing
 
 ```bash
-$ composer test
+composer test
 ```
 
 ## License
