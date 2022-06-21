@@ -72,7 +72,7 @@ class HookParser
 
             try {
                 return new ReflectionMethod($class, $method);
-            } catch (ReflectionException $e) {
+            } catch (ReflectionException $exception) {
                 throw new InvalidCallableException;
             }
         } else {

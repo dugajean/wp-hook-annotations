@@ -43,11 +43,11 @@ final class HookRegistry
             return;
         }
 
-        $methods = (array)get_class_methods($object);
+        $methods = (array) get_class_methods($object);
         foreach ($this->annotatedMethods($object, $methods) as $method) {
             try {
                 $this->register([$object, $method]);
-            } catch (\Exception $e) {
+            } catch (\Exception $exception) {
                 if (function_exists('wp_die')) {
                     wp_die('Could not register hooks with annotations. Please submit an issue.');
                 } else {
@@ -89,7 +89,7 @@ final class HookRegistry
         foreach ($methods as $key => $method) {
             try {
                 $reflectionMethod = new \ReflectionMethod($class, $method);
-            } catch (\ReflectionException $e) {
+            } catch (\ReflectionException $exception) {
                 continue;
             }
 

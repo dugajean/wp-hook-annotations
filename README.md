@@ -7,19 +7,19 @@
 
 Register WordPress hooks, filters and shortcodes.
 
-* With PHP Docblock (annotations)
-* Or with PHP 8.0 Attributes
+*   With PHP Docblock (annotations)
+*   Or with PHP 8.0 Attributes
 
 ## Requirements
 
-- PHP 7.1 or greater (tested on PHP 7.4, 8.0 and 8.1)
+*   PHP 7.1 or greater (tested on PHP 7.4, 8.0 and 8.1)
 
 ## Install
 
 Via Composer
 
 ```bash
-$ composer require arnaud-ritti/wp-hook
+composer require arnaud-ritti/wp-hook
 ```
 
 ## Usage
