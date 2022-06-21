@@ -1,8 +1,8 @@
 <?php
 
-namespace Dugajean\WpHookAnnotations\Tests;
+namespace Ari\WpHook\Tests;
 
-use Dugajean\WpHookAnnotations\HookRegistry;
+use Ari\WpHook\HookRegistry;
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 
 abstract class TestCase extends PhpUnitTestCase
@@ -48,7 +48,7 @@ abstract class TestCase extends PhpUnitTestCase
 
         return json_encode($expected);
     }
-    
+
     public function generateExpectedShortcode($tag, $output)
     {
         $expected = [

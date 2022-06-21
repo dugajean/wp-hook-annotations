@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Dugajean\WpHookAnnotations;
+namespace Ari\WpHook;
 
-use Dugajean\WpHookAnnotations\Parsers\AnnotationParser;
+use Ari\WpHook\Exceptions\InvalidCallableException;
+use Ari\WpHook\Models\Action;
+use Ari\WpHook\Parsers\AnnotationParser;
+use Ari\WpHook\Parsers\HookParser;
 
 /**
  * Reads the annotations and registers the hooks.
@@ -41,7 +44,6 @@ final class HookRegistry
         }
 
         $methods = (array)get_class_methods($object);
-
         foreach ($this->annotatedMethods($object, $methods) as $method) {
             try {
                 $this->register([$object, $method]);
@@ -61,13 +63,13 @@ final class HookRegistry
      * @param array $callable
      *
      * @throws \Doctrine\Common\Annotations\AnnotationException
-     * @throws \Dugajean\WpHookAnnotations\Exceptions\InvalidCallableException
-     * @throws \Dugajean\WpHookAnnotations\Exceptions\TriggerNotFoundException
+     * @throws \Ari\WpHook\Exceptions\InvalidCallableException
+     * @throws \Ari\WpHook\Exceptions\TriggerNotFoundException
      */
     public function register(array $callable)
     {
-        $annotationParser = new AnnotationParser($callable);
-        $modelsCollection = $annotationParser->getModels();
+        $parser = new HookParser($callable);
+        $modelsCollection = $parser->getModels();
 
         foreach ($modelsCollection as $model) {
             $model->trigger();
@@ -91,7 +93,7 @@ final class HookRegistry
                 continue;
             }
 
-            if ($reflectionMethod->getDocComment() !== false) {
+            if (!empty($reflectionMethod->getAttributes()) || $reflectionMethod->getDocComment() !== false) {
                 yield $key => $method;
             }
         }

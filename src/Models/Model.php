@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Dugajean\WpHookAnnotations\Models;
+namespace Ari\WpHook\Models;
 
-use Dugajean\WpHookAnnotations\Exceptions\TriggerNotFoundException;
-use Dugajean\WpHookAnnotations\Exceptions\ArgumentNotFoundException;
+use Ari\WpHook\Exceptions\TriggerNotFoundException;
+use Ari\WpHook\Exceptions\ArgumentNotFoundException;
 
 abstract class Model
 {
@@ -30,18 +30,6 @@ abstract class Model
     protected $requiredArguments = ['tag'];
 
     /**
-     * Model constructor.
-     *
-     * @param array        $data
-     *
-     * @throws \Dugajean\WpHookAnnotations\Exceptions\ArgumentNotFoundException
-     */
-    public function __construct(array $data)
-    {
-        $this->validateFields($data);
-    }
-
-    /**
      * Trigger the WordPress function to handle the registration.
      *
      * @throws TriggerNotFoundException
@@ -51,7 +39,7 @@ abstract class Model
         if (!$this->handler && !function_exists($this->handler)) {
             throw new TriggerNotFoundException("Function '{$this->handler}' could not be executed");
         }
-    
+
         ($this->handler)(...$this->arguments());
     }
 
@@ -76,10 +64,10 @@ abstract class Model
      *
      * @throws ArgumentNotFoundException
      */
-    protected function validateFields(array $data)
+    protected function validateFields()
     {
         foreach ($this->requiredArguments as $argument) {
-            if (!in_array($argument, array_keys($data))) {
+            if (empty($this->{$argument})) {
                 throw new ArgumentNotFoundException(sprintf(
                     'Required argument "%s" not found in annotation.',
                     $argument

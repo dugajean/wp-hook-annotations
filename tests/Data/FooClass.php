@@ -2,20 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Dugajean\WpHookAnnotations\Tests\Data;
+namespace Ari\WpHook\Tests\Data;
 
-use Dugajean\WpHookAnnotations\Models\Action;
-use Dugajean\WpHookAnnotations\Models\Filter;
-use Dugajean\WpHookAnnotations\Models\Shortcode;
+use Ari\WpHook\Models\Action;
+use Ari\WpHook\Models\Filter;
+use Ari\WpHook\Models\Shortcode;
 
 class FooClass
 {
     /**
-     * @Action(tag="init", priority= 99, accepted_args=2)
+     * @Action(tag="init", priority=99, accepted_args=2)
      * @Filter(tag="wp_title")
      * @Shortcode(tag="my_shortcode")
      */
-    public function foo()
+    #[Action(tag: 'init', priority: 99, accepted_args: 2)]
+    #[Filter(tag: 'wp_title')]
+    #[Shortcode(tag: 'my_shortcode')]
+    public static function foo()
     {
         return 'Foo';
     }
@@ -23,7 +26,8 @@ class FooClass
     /**
      * @Filter(tag="wp_title")
      */
-    public function foo1()
+    #[Filter(tag: 'wp_title')]
+    public static function foo1()
     {
         return 'New Title';
     }
@@ -31,7 +35,8 @@ class FooClass
     /**
      * @Filter(tag="wp_title", priority=99)
      */
-    public function foo3()
+    #[Filter(tag: 'wp_title', priority: 99)]
+    public static function foo3()
     {
         return 'New Title';
     }
@@ -39,7 +44,8 @@ class FooClass
     /**
      * @Filter(tag="wp_title", priority=99, accepted_args=2)
      */
-    public function foo4()
+    #[Filter(tag: 'wp_title', priority: 99, accepted_args: 2)]
+    public static function foo4()
     {
         return 'New Title';
     }
@@ -47,7 +53,8 @@ class FooClass
     /**
      * @Action(tag="init")
      */
-    public function foo5()
+    #[Action(tag: 'init')]
+    public static function foo5()
     {
         return 'Foo';
     }

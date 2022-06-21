@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Dugajean\WpHookAnnotations\Tests\Data;
+namespace Ari\WpHook\Tests\Data;
 
-use Dugajean\WpHookAnnotations\HookRegistry;
-use Dugajean\WpHookAnnotations\Models\Action;
-use Dugajean\WpHookAnnotations\Models\Filter;
-use Dugajean\WpHookAnnotations\Models\Shortcode;
+use Ari\WpHook\HookRegistry;
+use Ari\WpHook\Models\Action;
+use Ari\WpHook\Models\Filter;
+use Ari\WpHook\Models\Shortcode;
 
 class BarClass
 {
@@ -20,21 +20,26 @@ class BarClass
      * @Filter(tag="wp_title")
      * @Shortcode(tag="my_shortcode")
      */
-    public function foo() {
+    #[Action(tag: 'init', priority: 99, accepted_args: 2)]
+    #[Filter(tag: 'wp_title')]
+    #[Shortcode(tag: 'my_shortcode')]
+    public static function foo() {
         return 'Foo';
     }
 
     /**
      * @Shortcode(tag="cool_shortcode")
      */
-    public function bar() {
+    #[Shortcode(tag: 'cool_shortcode')]
+    public static function bar() {
         return 'Bar';
     }
 
     /**
      * @Filter(tag="wp_title", priority= 99, accepted_args=2)
      */
-    public function baz() {
+    #[Filter(tag: 'wp_title', priority: 99, accepted_args: 2)]
+    public static function baz() {
         return 'Baz';
     }
 }

@@ -2,14 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Dugajean\WpHookAnnotations\Models;
+namespace Ari\WpHook\Models;
 
-use function Dugajean\WpHookAnnotations\Helpers\get;
-use Dugajean\WpHookAnnotations\Exceptions\ArgumentNotFoundException;
+use Doctrine\Common\Annotations\Annotation\NamedArgumentConstructor;
+use function Ari\WpHook\Helpers\get;
+use Ari\WpHook\Exceptions\ArgumentNotFoundException;
+use Attribute;
 
 /**
  * @Annotation
+ * @NamedArgumentConstructor
  */
+#[Attribute(Attribute::TARGET_METHOD | Attribute::TARGET_FUNCTION | Attribute::IS_REPEATABLE)]
 class Filter extends Model
 {
     /**
@@ -34,13 +38,13 @@ class Filter extends Model
      *
      * @throws ArgumentNotFoundException
      */
-    public function __construct(array $data)
+    public function __construct(string $tag, int $priority = 10, int $accepted_args = 1)
     {
-        parent::__construct($data);
+        $this->tag = $tag;
+        $this->priority = $priority;
+        $this->acceptedArgs = $accepted_args;
 
-        $this->tag = get($data, 'tag');
-        $this->priority = get($data, 'priority', 10);
-        $this->acceptedArgs = get($data, 'accepted_args', 1);
+        $this->validateFields();
     }
 
     /**
