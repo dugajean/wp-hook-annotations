@@ -51,7 +51,7 @@ final class HookRegistry
                 if (function_exists('wp_die')) {
                     wp_die('Could not register hooks with annotations. Please submit an issue.');
                 } else {
-                    return;
+                    error_log('Could not register hooks with annotations. Please submit an issue.');
                 }
             }
         }

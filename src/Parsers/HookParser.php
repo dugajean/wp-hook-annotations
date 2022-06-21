@@ -50,18 +50,14 @@ class HookParser
     public function getModels(): array
     {
         if (PHP_VERSION_ID >= 80000){
-            $annotations = array_map(function (\ReflectionAttribute $item) {
+            return array_map(function (\ReflectionAttribute $item) {
                 return ($item->newInstance())->setCallable($this->callable);
             }, $this->reflectionMethod->getAttributes());
-        }else{
-            $reader = new AnnotationReader();
-            $annotations = $reader->getMethodAnnotations($this->reflectionMethod);
-            $annotations = array_map(function (Model $item) {
-                return $item->setCallable($this->callable);
-            }, $annotations);
         }
 
-        return $annotations;
+        return array_map(function (Model $item) {
+            return $item->setCallable($this->callable);
+        }, (new AnnotationReader())->getMethodAnnotations($this->reflectionMethod));
     }
 
     /**
@@ -75,14 +71,12 @@ class HookParser
             [$class, $method] = $this->callable;
 
             try {
-                $reflectionMethod = new ReflectionMethod($class, $method);
+                return new ReflectionMethod($class, $method);
             } catch (ReflectionException $e) {
                 throw new InvalidCallableException;
             }
         } else {
             throw new InvalidCallableException;
         }
-
-        return $reflectionMethod;
     }
 }
