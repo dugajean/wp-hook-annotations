@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dugajean\WpHookAnnotations\Exceptions;
+namespace Ari\WpHook\Exceptions;
 
 class ArgumentNotFoundException extends \Exception
 {

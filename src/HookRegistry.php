@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Dugajean\WpHookAnnotations;
+namespace Ari\WpHook;
 
-use Dugajean\WpHookAnnotations\Parsers\AnnotationParser;
+use Ari\WpHook\Exceptions\InvalidCallableException;
+use Ari\WpHook\Models\Action;
+use Ari\WpHook\Parsers\AnnotationParser;
+use Ari\WpHook\Parsers\HookParser;
 
 /**
  * Reads the annotations and registers the hooks.
@@ -40,16 +43,15 @@ final class HookRegistry
             return;
         }
 
-        $methods = (array)get_class_methods($object);
-
+        $methods = (array) get_class_methods($object);
         foreach ($this->annotatedMethods($object, $methods) as $method) {
             try {
                 $this->register([$object, $method]);
-            } catch (\Exception $e) {
+            } catch (\Exception $exception) {
                 if (function_exists('wp_die')) {
                     wp_die('Could not register hooks with annotations. Please submit an issue.');
                 } else {
-                    return;
+                    error_log('Could not register hooks with annotations. Please submit an issue.');
                 }
             }
         }
@@ -61,13 +63,13 @@ final class HookRegistry
      * @param array $callable
      *
      * @throws \Doctrine\Common\Annotations\AnnotationException
-     * @throws \Dugajean\WpHookAnnotations\Exceptions\InvalidCallableException
-     * @throws \Dugajean\WpHookAnnotations\Exceptions\TriggerNotFoundException
+     * @throws \Ari\WpHook\Exceptions\InvalidCallableException
+     * @throws \Ari\WpHook\Exceptions\TriggerNotFoundException
      */
     public function register(array $callable)
     {
-        $annotationParser = new AnnotationParser($callable);
-        $modelsCollection = $annotationParser->getModels();
+        $parser = new HookParser($callable);
+        $modelsCollection = $parser->getModels();
 
         foreach ($modelsCollection as $model) {
             $model->trigger();
@@ -87,11 +89,15 @@ final class HookRegistry
         foreach ($methods as $key => $method) {
             try {
                 $reflectionMethod = new \ReflectionMethod($class, $method);
-            } catch (\ReflectionException $e) {
+            } catch (\ReflectionException $exception) {
                 continue;
             }
 
-            if ($reflectionMethod->getDocComment() !== false) {
+            if (PHP_VERSION_ID >= 80000){
+                if (!empty($reflectionMethod->getAttributes())) {
+                    yield $key => $method;
+                }
+            }else if ($reflectionMethod->getDocComment() !== false) {
                 yield $key => $method;
             }
         }

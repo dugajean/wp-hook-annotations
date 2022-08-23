@@ -3,7 +3,8 @@
 $vendor = __DIR__.'/../vendor/';
 
 if (!file_exists($vendor)) {
-    die('Please run composer install before triggering the tests.');
+    print_r('Please run composer install before triggering the tests.');
+    exit();
 }
 
 require_once $vendor.'autoload.php';
@@ -20,38 +21,47 @@ if (!function_exists('execute_func')) {
 }
 
 if (!function_exists('add_filter')){
+    /**
+     * @throws JsonException
+     */
     function add_filter($tag, $function_to_add, $priority = 10, $accepted_args = 1)
     {
-        echo json_encode([
+        print_r(json_encode([
             'function' => __FUNCTION__,
             'tag' => $tag,
             'priority' => $priority,
             'accepted_args' => $accepted_args,
             'output' => execute_func($function_to_add),
-        ]);
+        ], JSON_THROW_ON_ERROR));
     }
 }
 
 if (!function_exists('add_action')) {
+    /**
+     * @throws JsonException
+     */
     function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1)
     {
-        echo json_encode([
+        print_r(json_encode([
             'function' => __FUNCTION__,
             'tag' => $tag,
             'priority' => $priority,
             'accepted_args' => $accepted_args,
             'output' => execute_func($function_to_add),
-        ]);
+        ], JSON_THROW_ON_ERROR));
     }
 }
 
 if (!function_exists('add_shortcode')) {
+    /**
+     * @throws JsonException
+     */
     function add_shortcode($tag, $callback)
     {
-        echo json_encode([
+        print_r(json_encode([
             'function' => __FUNCTION__,
             'tag' => $tag,
             'output' => execute_func($callback),
-        ]);
+        ], JSON_THROW_ON_ERROR));
     }
 }

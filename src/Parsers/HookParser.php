@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Dugajean\WpHookAnnotations\Parsers;
+namespace Ari\WpHook\Parsers;
 
 use ReflectionMethod;
 use ReflectionException;
-use Dugajean\WpHookAnnotations\Models\Model;
+use Ari\WpHook\Models\Model;
 use Doctrine\Common\Annotations\AnnotationReader;
-use Dugajean\WpHookAnnotations\Exceptions\InvalidCallableException;
+use Ari\WpHook\Exceptions\InvalidCallableException;
 
 /**
  * Parses the annotations from the docblocks with Doctrine Annotations.
  *
  * @author Dukagjin Surdulli <me@dukagj.in>
  */
-class AnnotationParser
+class HookParser
 {
     /**
      * @var \ReflectionMethod
@@ -49,14 +49,15 @@ class AnnotationParser
      */
     public function getModels(): array
     {
-        $reader = new AnnotationReader();
-        $annotations = $reader->getMethodAnnotations($this->reflectionMethod);
+        if (PHP_VERSION_ID >= 80000){
+            return array_map(function (\ReflectionAttribute $item) {
+                return ($item->newInstance())->setCallable($this->callable);
+            }, $this->reflectionMethod->getAttributes());
+        }
 
-        $annotations = array_map(function (Model $item) {
+        return array_map(function (Model $item) {
             return $item->setCallable($this->callable);
-        }, $annotations);
-
-        return $annotations;
+        }, (new AnnotationReader())->getMethodAnnotations($this->reflectionMethod));
     }
 
     /**
@@ -70,14 +71,12 @@ class AnnotationParser
             [$class, $method] = $this->callable;
 
             try {
-                $reflectionMethod = new ReflectionMethod($class, $method);
-            } catch (ReflectionException $e) {
+                return new ReflectionMethod($class, $method);
+            } catch (ReflectionException $exception) {
                 throw new InvalidCallableException;
             }
         } else {
             throw new InvalidCallableException;
         }
-
-        return $reflectionMethod;
     }
 }

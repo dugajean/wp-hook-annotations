@@ -2,11 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Dugajean\WpHookAnnotations\Models;
+namespace Ari\WpHook\Models;
+
+use Attribute;
+use Doctrine\Common\Annotations\Annotation\NamedArgumentConstructor;
 
 /**
  * @Annotation
+ * @NamedArgumentConstructor
  */
+#[Attribute(Attribute::TARGET_METHOD | Attribute::TARGET_FUNCTION | Attribute::IS_REPEATABLE)]
 class Shortcode extends Model
 {
     /**
@@ -19,13 +24,12 @@ class Shortcode extends Model
      *
      * @param array $data
      *
-     * @throws \Dugajean\WpHookAnnotations\Exceptions\ArgumentNotFoundException
+     * @throws \Ari\WpHook\Exceptions\ArgumentNotFoundException
      */
-    public function __construct(array $data)
+    public function __construct(string $tag)
     {
-        parent::__construct($data);
-
-        $this->tag = $data['tag'];
+        $this->tag = $tag;
+        $this->validateFields();
     }
 
     /**

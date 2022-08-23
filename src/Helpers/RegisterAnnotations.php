@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dugajean\WpHookAnnotations\Helpers;
+namespace Ari\WpHook\Helpers;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
 

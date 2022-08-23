@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Dugajean\WpHookAnnotations\Tests\Unit;
+namespace Ari\WpHook\Tests\Unit;
 
-use Dugajean\WpHookAnnotations\Tests\TestCase;
-use Dugajean\WpHookAnnotations\Tests\Data\BarClass;
-use Dugajean\WpHookAnnotations\Tests\Data\FooClass;
+use Ari\WpHook\Tests\TestCase;
+use Ari\WpHook\Tests\Data\BarClass;
+use Ari\WpHook\Tests\Data\FooClass;
 
 class RegisterTest extends TestCase
 {

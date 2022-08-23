@@ -1,26 +1,30 @@
 {
-    "name": "dugajean/wp-hook-annotations",
+    "name": "arnaud-ritti/wp-hook",
     "description": "Use PHP Docblock (annotations) to register WordPress hooks, filters and shortcodes.",
     "type": "library",
     "license": "MIT",
     "minimum-stability": "stable",
     "authors": [
         {
+            "name": "Arnaud Ritti",
+            "email": "arnaud.ritti@gmail.com"
+        },
+        {
             "name": "Dukagjin Surdulli",
             "email": "me@dukagj.in"
         }
     ],
     "require": {
-        "php": "~7.1",
+        "php": "^7.1 || ^8.0",
         "doctrine/annotations": "^1.6"
     },
     "require-dev": {
         "ext-json": "*",
-        "phpunit/phpunit": "^7"
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
-            "Dugajean\\WpHookAnnotations\\": "src/"
+            "Ari\\WpHook\\": "src/"
         },
         "files": [
             "src/Helpers/Utils.php",
@@ -29,7 +33,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Dugajean\\WpHookAnnotations\\Tests\\": "tests/"
+            "Ari\\WpHook\\Tests\\": "tests/"
         }
     },
     "scripts": {
